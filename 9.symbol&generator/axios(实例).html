@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引入axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //请求数据
+        // 访问该网站(接口)
+        // https://api.github.com/users/zhangsan
+        function * gen() {
+            let val = yield 'zhangsan';
+            yield axios.get(`https://api.github.com/users/${val}`);//获取名称
+
+        }
+        let g1 = gen();
+        
+        let username = g1.next().value;//1.获取用户名
+        //2.获取用户信息
+        // g1.next(username).value
+        //console.log(username);
+        // console.log(g1.next(username).value);//Promise {<pending>}
+        //发现是promise 可以使用then 返回结果
+        g1.next(username).value.then(res => {
+            console.log(res.data);//获取 res的data 信息
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

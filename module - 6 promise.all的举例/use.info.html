@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="module">
+        Promise.all([
+            import('./1.js'),
+            import('./2.js'),
+        ]).then(([mod1,mod2]) =>{//返回结果用[mod1,mod2]进行解构
+            console.log(mod1);
+            console.log(mod2);
+        })
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

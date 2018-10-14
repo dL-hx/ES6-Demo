@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height:100px;
+            background: red;
+            position: absolute;
+            top: 0px;
+        }
+        .left{
+            left:0;
+        }
+
+        .right{
+            right: 0;
+        }
+    </style>
+  
+</head>
+<body>
+    <div id = "div1" class="box left">DIV1</div>
+    <div id = "div2" class="box right">DIV2</div>
+
+    <script>
+        //普通拖拽 父类
+            class Drag{
+                constructor(id){
+                    this.oDiv = document.querySelector(id);
+                    this.disX = 0;//div在左在右边的距离
+                    this.disY = 0;
+                    this.init();
+                }
+                init(){
+                    this.oDiv.onmousedown = function(ev){
+                        this.disX = ev.clientX - this.oDiv.offsetLeft;
+                        this.disY = ev.clientY - this.oDiv.offsetTop;
+    
+                        document.onmousemove = this.fnMove.bind(this);
+                        document.onmouseup = this.fnUp.bind(this);
+                        return false;//禁止选中 div文字
+                    }.bind(this);
+                }
+    
+                fnMove(ev){
+                    this.oDiv.style.left = ev.clientX - this.disX + 'px';
+                    this.oDiv.style.top = ev.clientY - this.disY + 'px';
+                }
+                fnUp(ev){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+            //子类 限制范围
+            class LimitDrag extends Drag{
+                fnMove(ev){
+                    super.fnMove(ev);//为了不冲掉父类的方法  调用父类方法super.fnMove
+//如果注掉这句代码将不能移动 div 
+                    //限制范围
+                    if(this.oDiv.offsetLeft <= 0){
+                        this.oDiv.style.left = 0;
+                    }
+                    if(this.oDiv.offsetTop <= 0){
+                        this.oDiv.style.top = 0;
+                    }
+                }
+            }
+            //调用 希望可以拖拽
+            new Drag('#div1');
+            new LimitDrag('#div2');
+        </script>
+</body>
+</html>

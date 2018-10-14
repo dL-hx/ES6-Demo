@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        /* 绑定方法  使用prototype */
+        Person.prototype.showName = function () {
+            return `名字为: ${this.name}`;
+        };
+        Person.prototype.showAge = function () {
+            return `名字为: ${this.age}`;
+        };
+
+        /* //另一种 绑定方法
+        //Object.assign(tar,sou) 合并对象从一个或多个源对象复制到目标对象。它将返回目标对象。
+        Object.assign(Person.prototype, {
+            showName() {
+                return `名字为: ${this.name}`;
+            },
+            showAge() {
+                return `名字为: ${this.age}`;
+            }
+
+        }) */
+        let p1 = new Person('Strive', 18);
+        console.log(p1.showName());
+        console.log(p1.showAge());
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

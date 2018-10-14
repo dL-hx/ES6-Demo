@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        const DOM = new Proxy({},{
+               get(target, property) {
+                   //console.log(target, property);
+                   // property DOM.xxx 里面的xxx
+                   return function(attr = {},...children) {
+                    //    console.log(attr,children);
+                    // 创建元素
+                    const e1 = document.createElement(property);
+                    
+                    //添加属性  循环  for ...of 
+                    for(let key of Object.keys(attr)){
+                        e1.setAttribute(key,attr[key]);
+                    }
+
+                    //添加子元素 
+
+                    for(let child of children){
+                        //判断一下是string  if
+                        //创建文本节点
+                        if(typeof child == 'string'){
+                            child = document.createTextNode(child);
+                        }
+                        e1.appendChild(child);
+                    }
+                    return e1;
+                   }
+                }
+            }
+        );
+        let oDiv = DOM.div({id:'div1',class:'aaa'},'我是div','呵呵呵',
+            DOM.a({href:'http://es6.ruanyifeng.com/#docs/reflect'},'访问官网'),
+            DOM.ul({},
+                    DOM.li({},'111'),
+                    DOM.li({},'222'),
+                    DOM.li({},'333'),
+                    DOM.li({},'444'),
+                    )
+            );
+        // console.log(oDiv);
+        // console.log(oDiv);
+        // console.log(oDiv);
+
+        //将创建的东西扔到body中
+        window.onload = function() {
+            document.body.appendChild(oDiv);
+        }
+   </script>
+</head>
+<body>
+    
+</body>
+</html>

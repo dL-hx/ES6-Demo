@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="module">
+            async function main(){
+                const mod1 = await import('./1.js');
+                const mod2 = await import('./2.js');
+                console.log(mod1,mod2);
+                const [m1,m2] = await Promise.all([
+                    import('./1.js'),
+                    import('./2.js')
+                ]);
+                console.log(m1,m2);
+    }
+            main();//调用main函数
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
